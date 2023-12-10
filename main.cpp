@@ -1,11 +1,13 @@
 #include <stdio.h>
+#include <iostream>
 #include <string.h>
 #include <math.h>
 #include <ncurses.h>
+#include "map.h"
 
 // key code
-//#define vk_space 32
-//#define vk_enter 10
+#define vk_space 32
+#define vk_enter 10
 int key_pressed = 0;
 
 // color
@@ -27,7 +29,7 @@ short level = 1;
 short score = 0;
 short lifes = 3;
 
-int apples_in_level = 0;
+int baksos_in_level = 0;
 int bullet_shoot = false;
 
 // level size
@@ -93,7 +95,8 @@ void draw_logo(int h, int w) {
     // Draw
     attron(COLOR_PAIR(c_hud));
     for (int i = 0; i < logo_h_size; i++) {
-        mvprintw(3 + i /* Logo Y pos */, w / 2 - logo_w_size, menu_logo[i]);
+        mvprintw(3 + i /* Logo Y pos */, w / 2 - logo_w_size, "%s", menu_logo[i]);
+
     }
     attroff(COLOR_PAIR(c_hud));
 }
@@ -105,7 +108,7 @@ void draw_logo(int h, int w) {
 short arr_size_x;
 #define s_wall  "///"
 #define s_exit  "***"
-#define s_apple "(`)"
+#define s_bakso "(`)"
 #define s_empty "   "
 #define s_door  "-^-"
 #define s_life  "(+)"
@@ -122,7 +125,7 @@ short arr_size_x;
 void SetColor() {
     start_color();
     init_pair(c_wall,   COLOR_BLUE,     COLOR_BLACK);
-    init_pair(c_apple,  COLOR_WHITE,    COLOR_BLACK);
+    init_pair(c_bakso,  COLOR_WHITE,    COLOR_BLACK);
     init_pair(c_door,   COLOR_RED,      COLOR_BLACK);
     init_pair(c_space,  COLOR_BLACK,    COLOR_BLACK);
     init_pair(c_life,   COLOR_GREEN,    COLOR_BLACK);
@@ -271,7 +274,7 @@ void player_collision(short current_lvl[][arr_size_x]) {
             break;
 
         // Apple collision
-        case i_apple:
+        case i_bakso:
             current_lvl[player.y][player.x] = 0;
             score = score + 1;
             break;
@@ -344,8 +347,8 @@ void set_lvl_param(short current_lvl[][arr_size_x], int clx, int cly) {
     static int i = 0;
     for (int y = 0; y < cly; y++) {
         for (int x = 0; x < clx; x++) {
-            if (current_lvl[y][x] == i_apple) {
-                apples_in_level = apples_in_level + 1;
+            if (current_lvl[y][x] == i_bakso) {
+                baksos_in_level = baksos_in_level + 1;
             }
 
             if (current_lvl[y][x] == i_enemy_v) {
@@ -367,7 +370,7 @@ void set_lvl_param(short current_lvl[][arr_size_x], int clx, int cly) {
 bool next_lvl(short current_lvl[][arr_size_x]) {
     if (current_lvl[player.y][player.x] == i_exit) {
         score = 0;
-        apples_in_level = 0;
+        baksos_in_level = 0;
         level = level + 1;
         return true;
     }
@@ -384,7 +387,7 @@ void draw_level(short lvl[][arr_size_x]) {
                 // Draw static object
                 case i_wall:   draw_instance(y, x, c_wall,  s_wall);  break;
                 case i_box:    draw_instance(y, x, c_box,   s_box);   break;
-                case i_apple:  draw_instance(y, x, c_apple, s_apple); break;
+                case i_bakso:  draw_instance(y, x, c_bakso, s_bakso); break;
                 case i_door:   draw_instance(y, x, c_door,  s_door);  break;
                 case i_space:  draw_instance(y, x, c_wall,  s_space); break;
                 case i_life:   draw_instance(y, x, c_life,  s_life);  break;
@@ -419,7 +422,7 @@ void draw_level(short lvl[][arr_size_x]) {
             }
 
             // Open door
-            if (score == apples_in_level) {
+            if (score == baksos_in_level) {
                 if (lvl[y][x] == i_door) {
                     lvl[y][x] = 0;
                 }
@@ -431,11 +434,11 @@ void draw_level(short lvl[][arr_size_x]) {
 
 void draw_hud() {
     if (score == 0) {
-        mvprintw(1, 2, "apples: %d%%   lifes: %d   level: %d\n", score, lifes, level);
+        mvprintw(1, 2, "baksos: %d%%   lifes: %d   level: %d\n", score, lifes, level);
         return;
     }
 
-    mvprintw(1, 2, "apples: %d%%   lifes: %d   level: %d\n", ((score * 100) / apples_in_level), lifes, level);
+    mvprintw(1, 2, "baksos: %d%%   lifes: %d   level: %d\n", ((score * 100) / baksos_in_level), lifes, level);
 }
 
 
@@ -706,7 +709,7 @@ int main() {
                 static int len_xoff = 31;
                 static int len_yoff = 2;
                 mvprintw(h / 2 - len_yoff, w / 2 - len_xoff, "This is a small game written in C++.");
-                mvprintw(h / 2 - len_yoff + 1, w / 2 - len_xoff, "Your task is to collect all the apples while avoiding enemies.");
+                mvprintw(h / 2 - len_yoff + 1, w / 2 - len_xoff, "Your task is to collect all the baksos while avoiding enemies.");
                 mvprintw(h / 2 - len_yoff + 2, w / 2 - len_xoff, "I wrote this game just for fun :)");
                 mvprintw(h / 2 - len_yoff + 3, w / 2 - len_xoff, "I do not recommend using the source code for learning C++.");
                 mvprintw(h / 2 - len_yoff + 4, w / 2 - len_xoff, "Have a good game!");
