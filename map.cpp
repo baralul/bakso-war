@@ -1,3 +1,16 @@
+/*
+// index map object
+#define i_wall   1
+#define i_apple  2
+#define i_door   3
+#define i_space  4
+#define i_life   5
+#define i_exit   6
+#define i_enemy_v 7
+#define i_box    8
+#define i_enemy_h 9
+*/
+
 ////////////////
 // Level one
 ///////////////
