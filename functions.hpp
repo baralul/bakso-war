@@ -46,8 +46,8 @@ public:
     void Shoot(Player &P, EnemyFleet &E);
 };
 
-void startMenu(int width, int height);
-void startGame(int width, int height);
+void startMenu(int height, int width);
+void startGame(int height, int width);
 void moveFleet(EnemyFleet &E);
 void pauseGame();
 
