@@ -310,9 +310,9 @@ void ControlsAndRules(int height, int width)
     mvprintw(height / 2 - 3, width / 2 - 18, "Press RIGHT arrow key to move right.");
     mvprintw(height / 2 - 2, width / 2 - 18, " Press SPACE key to shoot bullets.");
     mvprintw(height / 2, width / 2 - 39, "                                   RULES");
-    mvprintw(height / 2 + 2, width / 2 - 39, "Protect the secret bakso recipe!");
-    mvprintw(height / 2 + 3, width / 2 - 39, "Shoot down the Baksoville invaders before they reach the bottom.");
-    mvprintw(height / 2 + 4, width / 2 - 39, "If they succeed, humanity loses the beloved bakso.");
+    mvprintw(height / 2 + 2, width / 2 - 15, "Protect the secret bakso recipe!");
+    mvprintw(height / 2 + 3, width / 2 - 30, "Shoot down the Baksoville invaders before they reach the bottom.");
+    mvprintw(height / 2 + 4, width / 2 - 25, "If they succeed, humanity loses the beloved bakso.");
     mvprintw(height / 2 + 9, width / 2 - 20, "Press any key to return to the start menu.");
     flushinp();
     refresh();
